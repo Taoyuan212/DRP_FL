@@ -1,0 +1,16 @@
+{
+  "method": "shared_training_only_scaling",
+  "fit_start": "2021-01-01 00:10:00",
+  "fit_end_exclusive": "2021-09-01 00:00:00",
+  "fit_rows": 4385195,
+  "fit_record_rule": "training timestamps only; Patv and Wspd observed; Wspd inside frozen project range",
+  "Patv_clean_kw": {
+    "mean": 387.32472452422303,
+    "std_population": 440.4288814118212
+  },
+  "Wspd": {
+    "mean": 5.160910807843209,
+    "std_population": 3.600683977500965
+  },
+  "target_scale_kw": 1500.0
+}

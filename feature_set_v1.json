@@ -1,0 +1,26 @@
+{
+  "version": "v1",
+  "historical_features": [
+    "Patv_clean_kw",
+    "Wspd"
+  ],
+  "issue_time_features": [
+    "hour_sin",
+    "hour_cos",
+    "day_of_year_sin",
+    "day_of_year_cos"
+  ],
+  "excluded": [
+    "ERA5",
+    "Wdir",
+    "Ndir",
+    "Pab1",
+    "Pab2",
+    "Pab3",
+    "Etmp",
+    "Itmp",
+    "Prtv",
+    "operating_states"
+  ],
+  "causality": "All history ends at issue_time; calendar features use issue_time only."
+}

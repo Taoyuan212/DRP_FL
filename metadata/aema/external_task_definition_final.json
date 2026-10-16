@@ -1,0 +1,35 @@
+{
+  "client": "physical wind farm",
+  "horizon_minutes": 60,
+  "horizon_steps": 12,
+  "input_dimension": 76,
+  "lookback_hours": 6,
+  "lookback_steps": 72,
+  "missing_rule": "no interpolation/fill; all 72 lags and target must be valid",
+  "normalization": "IDENTITY / NO-SCALER",
+  "power_features": "72 capacity-aware per-unit generation lags",
+  "quantiles": [
+    0.1,
+    0.2,
+    0.3,
+    0.4,
+    0.5,
+    0.6,
+    0.7,
+    0.8,
+    0.9
+  ],
+  "target": "capacity-aware per-unit generation at t+1h",
+  "task": "Task A",
+  "time_features": {
+    "clock": "NEM time fixed AEST UTC+10",
+    "count": 4,
+    "features": [
+      "sin_hour",
+      "cos_hour",
+      "sin_day_of_year",
+      "cos_day_of_year"
+    ],
+    "reference": "forecast origin t"
+  }
+}

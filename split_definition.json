@@ -1,0 +1,20 @@
+{
+  "scheme": "fixed_date_chronological_half_open_intervals",
+  "timezone": "UTC+08:00 per SDWPF documentation; timestamps stored as naive local time",
+  "splits": {
+    "train": [
+      "2021-01-01 00:10:00",
+      "2021-09-01 00:00:00"
+    ],
+    "validation": [
+      "2021-09-01 00:00:00",
+      "2021-11-01 00:00:00"
+    ],
+    "test": [
+      "2021-11-01 00:00:00",
+      "2022-01-01 00:00:00"
+    ]
+  },
+  "purge_rule": "A 6 h history window must start no earlier than its target split start; boundaries are purged per client.",
+  "normalization_fit_split": "train only"
+}

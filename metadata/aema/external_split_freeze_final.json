@@ -1,0 +1,33 @@
+{
+  "A": "2025-08-13 00:00:00",
+  "B": "2026-04-19 00:00:00",
+  "C": "2026-06-20 00:00:00",
+  "D": "2026-08-21 00:00:00",
+  "days": {
+    "test": 62.0,
+    "train": 249.0,
+    "validation": 62.0
+  },
+  "interval_semantics": "[start,end)",
+  "leakage_tests": {
+    "passed": true,
+    "test_target_before_D": true,
+    "train_target_before_B": true,
+    "validation_target_before_C": true
+  },
+  "purge_rule": {
+    "conditions": [
+      "t-6h >= split_start",
+      "t+1h < split_end"
+    ],
+    "forecast_origin": "t",
+    "input": "[t-6h,...,t-5min] (72 values)",
+    "target": "t+1h"
+  },
+  "ratios": {
+    "test": 0.16621983914209115,
+    "train": 0.6675603217158177,
+    "validation": 0.16621983914209115
+  },
+  "timezone": "NEM time (fixed AEST UTC+10; no DST)"
+}

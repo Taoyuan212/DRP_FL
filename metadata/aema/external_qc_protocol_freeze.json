@@ -1,0 +1,78 @@
+{
+  "above_capacity_rule": {
+    "p.u. > 1.10": "physical anomaly; invalidate affected samples",
+    "retain_without_clipping": "1 < p.u. <= 1.10",
+    "upper_anomaly_count": 2
+  },
+  "capacity_rule": "effective-date FARM_TOTAL capacity at every timestamp; never latest-capacity backfill",
+  "exact_duplicates": {
+    "conflict_rule": "HARD FAIL; never average",
+    "processed_collapse_identical": 94,
+    "raw_retained": true
+  },
+  "long_gap_audit": [
+    {
+      "affected_purge_eligible_samples": {
+        "test": 0,
+        "train": 207,
+        "validation": 0
+      },
+      "client_id": "WOOLNTH1",
+      "end_missing_exclusive": "2025-08-17 20:40:00",
+      "first_missing_timestamp": "2025-08-17 10:25:00",
+      "missing_duration_minutes": 615,
+      "surrounding_observation_gap_minutes": 620
+    },
+    {
+      "affected_purge_eligible_samples": {
+        "test": 0,
+        "train": 160,
+        "validation": 0
+      },
+      "client_id": "WOOLNTH1",
+      "end_missing_exclusive": "2025-12-16 13:00:00",
+      "first_missing_timestamp": "2025-12-16 06:40:00",
+      "missing_duration_minutes": 380,
+      "surrounding_observation_gap_minutes": 385
+    },
+    {
+      "affected_purge_eligible_samples": {
+        "test": 0,
+        "train": 0,
+        "validation": 185
+      },
+      "client_id": "WOOLNTH1",
+      "end_missing_exclusive": "2026-05-29 10:05:00",
+      "first_missing_timestamp": "2026-05-29 01:40:00",
+      "missing_duration_minutes": 505,
+      "surrounding_observation_gap_minutes": 510
+    },
+    {
+      "affected_purge_eligible_samples": {
+        "test": 173,
+        "train": 0,
+        "validation": 0
+      },
+      "client_id": "YSWF",
+      "end_missing_exclusive": "2026-07-14 06:00:00",
+      "first_missing_timestamp": "2026-07-13 22:35:00",
+      "missing_duration_minutes": 445,
+      "surrounding_observation_gap_minutes": 450
+    }
+  ],
+  "missing_rule": "No interpolation, forward/backward/zero fill; exclude sample if any of 72 lags or target invalid",
+  "negative_rule": {
+    "count": 49712,
+    "large_negative_count": 4,
+    "large_negative_rule": "p.u. < -0.02 invalidates affected samples",
+    "processed_action": "clip to zero",
+    "small_negative_range_pu": "[-0.02,0)"
+  },
+  "raw_immutable": true,
+  "sample_sufficiency_gate": {
+    "minimum_test_index_samples": 2048,
+    "minimum_train_samples": 2048,
+    "minimum_validation_samples": 2048,
+    "rationale": "at least one full frozen batch in every split; evaluated before any model result"
+  }
+}

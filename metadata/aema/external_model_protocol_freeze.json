@@ -1,0 +1,62 @@
+{
+  "DRP-FL V1": {
+    "beta": 0.5,
+    "relation": "cosine of shared-anchor local updates",
+    "semantics": "Stage 5 frozen",
+    "tau": 0.2
+  },
+  "FedFomo": {
+    "candidate_count": 5,
+    "epsilon": 0.3,
+    "epsilon_decay": 0.05,
+    "inner_fraction": 0.1,
+    "inner_split": "Train-only chronological + 7h purge"
+  },
+  "FedProx": {
+    "mu": 0.01
+  },
+  "activation": "ReLU",
+  "architecture": [
+    76,
+    64,
+    64,
+    64,
+    9
+  ],
+  "baseline_set": [
+    "Local",
+    "FedAvg",
+    "FedProx",
+    "FedFomo",
+    "pFedGraph",
+    "DRP-FL V1"
+  ],
+  "batch_size": 2048,
+  "excluded_methods": {
+    "APPLE": "adaptation failure",
+    "FedAMP": "multi-seed performance failure under SDWPF frozen protocol",
+    "PGFed": "multi-seed performance failure under SDWPF frozen protocol"
+  },
+  "forbidden": [
+    "architecture changes",
+    "hyperparameter retuning",
+    "crossing correction",
+    "test-based selection"
+  ],
+  "learning_rate": 0.001,
+  "local_epochs": 1,
+  "loss": "mean nine-quantile Pinball",
+  "optimizer": "Adam",
+  "pFedGraph": {
+    "constraints": "87x87 nonnegative row-simplex",
+    "graph_lambda": 0.8,
+    "local_cosine_lambda": 0.01
+  },
+  "parameter_count": 13833,
+  "rounds": 40,
+  "seed_protocol": [
+    2026,
+    2027,
+    2028
+  ]
+}

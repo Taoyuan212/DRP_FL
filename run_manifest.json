@@ -1,0 +1,16 @@
+{
+  "stage": 2,
+  "raw_path": "E:\\ENG\\data\\raw\\sdwpf_2001_2112_full.parquet",
+  "raw_sha256": "b1e42fa7d12f30beb842e3257cd8676907a988c158554a1ed10eab248e347a95",
+  "script_path": "E:\\ENG\\scripts\\run_sdwpf_stage2.py",
+  "script_sha256": "a77947aef2e7408570a2c328aaa24f72700cf907715b374d9ada361c577ad260",
+  "window_helper_sha256": "d9af09e050321ed9fd8f3f843de53e8f77d5e3000a6fbb4753a8d5bf5da95cc0",
+  "config_path": "E:\\ENG\\configs\\stage2.json",
+  "config_sha256": "886984c8eff3e8cabf0f01d6b891d197fe8d7eea5dafb86bf47366bad33f2bc5",
+  "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "platform": "Windows-10-10.0.19045-SP0",
+  "pandas": "2.3.3",
+  "numpy": "2.4.6",
+  "official_source": "Zhou et al., Scientific Data 11, 649 (2024), DOI:10.1038/s41597-024-03427-5",
+  "training_performed": false
+}

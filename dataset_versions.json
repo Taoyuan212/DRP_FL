@@ -1,0 +1,18 @@
+{
+  "Main-134": {
+    "included_clients": "all 134 clients",
+    "role": "primary experiments"
+  },
+  "Sensitivity-133": {
+    "included_clients": "all except client 83",
+    "excluded_clients": [
+      83
+    ],
+    "role": "predeclared data-quality sensitivity only"
+  },
+  "partition_layout": {
+    "client_###.parquet": "all candidate issue-time audit index",
+    "client_###_windows.parquet": "valid primary-horizon samples with fixed-size Core-feature input windows"
+  },
+  "no_training_in_stage2": true
+}
