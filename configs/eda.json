@@ -1,0 +1,22 @@
+{
+  "input_path": "data/raw/sdwpf_2001_2112_full.parquet",
+  "location_path": "data/raw/sdwpf_turb_location_elevation.csv",
+  "output_dir": "results/eda",
+  "time_resolution_minutes": 10,
+  "rated_power_kw": 1500.0,
+  "wind_bins_ms": [0, 2.5, 4, 6, 8, 10, 12, 15, 20, 30, 100],
+  "distribution_quantiles": 201,
+  "minimum_curve_bin_count": 30,
+  "system_missing_client_fraction": 0.8,
+  "recommendation": {
+    "recommended_min_coverage": 0.9,
+    "recommended_max_missing_rate": 0.1,
+    "recommended_max_official_flag_rate": 0.35,
+    "caution_min_coverage": 0.7,
+    "caution_max_missing_rate": 0.3,
+    "caution_max_official_flag_rate": 0.6,
+    "not_recommended_longest_gap_days": 30
+  },
+  "random_seed": 20260813
+}
+

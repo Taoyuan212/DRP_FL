@@ -1,0 +1,33 @@
+{
+  "stage": 5,
+  "dataset_version": "Main-134/v1",
+  "stage4_config": "configs/federated_baselines.json",
+  "stage4_root": "results/federated/h1h",
+  "local_root": "results/local/h1h",
+  "processed_dir": "data/processed/v1",
+  "output_root": "results/drp_v1/h1h",
+  "primary_seed": 2026,
+  "additional_seeds": [2027, 2028],
+  "betas": [0.0, 0.5, 0.9],
+  "temperatures": [0.05, 0.1, 0.2, 0.5],
+  "epsilon": 1e-12,
+  "static_relation_rounds": 5,
+  "random_relation_repeats": 10,
+  "random_relation_seed": 52026,
+  "artifact_tolerance": 2e-8,
+  "persistent_fedavg_nt_clients": [76, 84, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 109, 110, 112, 113, 115, 116, 119, 120, 121, 124, 125, 129, 132],
+  "pre_registered_seed_2026_continuation_gate": {
+    "drp_mean_pinball_not_worse_than_fedavg_tolerance": 1e-5,
+    "degraded_clients_must_be_fewer_than_fedavg": true,
+    "worst_degradation_not_worse_than_fedavg_tolerance": 1e-5,
+    "drp_must_beat_random_mean_by": 1e-5,
+    "drp_must_beat_at_least_random_repeats": 9,
+    "drp_must_beat_shuffled_mean_by": 1e-5,
+    "median_self_weight_max": 0.9,
+    "mean_external_mass_min": 0.1
+  },
+  "fixed_client_order": "ascending_client_id",
+  "v1_protocol": "shared_fedavg_anchor_offline_personalized_prediction_only",
+  "hyperparameter_data": "seed_2026_validation_only",
+  "test_reselection_forbidden": true
+}

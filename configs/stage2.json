@@ -1,0 +1,49 @@
+{
+  "input_path": "data/raw/sdwpf_2001_2112_full.parquet",
+  "output_dir": "results/stage2",
+  "processed_dir": "data/processed/v1",
+  "main_clients": "all",
+  "sensitivity_excluded_clients": [83],
+  "analysis_start": "2021-01-01 00:10:00",
+  "analysis_end_exclusive": "2022-01-01 00:00:00",
+  "frequency_minutes": 10,
+  "lookback_hours": 6,
+  "lookback_candidates_hours": [6, 12, 24],
+  "primary_horizon_minutes": 60,
+  "secondary_horizons_minutes": [10, 180],
+  "all_materialized_horizons_minutes": [10, 60, 180],
+  "interpolation": {
+    "main_strategy": "none_complete_windows_only",
+    "comparison_max_causal_fill_steps": [1, 2]
+  },
+  "target_policy": {
+    "main_task": "normal_operation",
+    "mask_official_unknown": true,
+    "mask_official_abnormal": true,
+    "mask_missing_patv": true,
+    "clip_negative_valid_patv_to_zero": true
+  },
+  "physical_sensor_flags": {
+    "wspd_min_ms": 0.0,
+    "wspd_max_ms": 40.0,
+    "temperature_min_c": -60.0,
+    "temperature_max_c": 80.0
+  },
+  "splits": {
+    "train": ["2021-01-01 00:10:00", "2021-09-01 00:00:00"],
+    "validation": ["2021-09-01 00:00:00", "2021-11-01 00:00:00"],
+    "test": ["2021-11-01 00:00:00", "2022-01-01 00:00:00"]
+  },
+  "normalization": {
+    "input": "shared_training_only_scaling",
+    "target": "per_unit_physical_scale",
+    "rated_power_kw": 1500.0,
+    "time_encoding": "unscaled"
+  },
+  "non_iid": {
+    "wind_bins_ms": [0, 2.5, 4, 6, 8, 10, 12, 15, 20, 30, 100],
+    "minimum_curve_bin_count": 30
+  },
+  "random_seed": 20260813,
+  "manual_timestamp_check_count": 100
+}

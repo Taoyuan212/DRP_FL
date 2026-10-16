@@ -1,0 +1,47 @@
+{
+  "stage": "6D",
+  "output_dir": "results/stage6d",
+  "stage6b_output": "results/stage6b",
+  "stage6c_output": "results/stage6c",
+  "seed": 2026,
+  "client_count": 134,
+  "quantiles": [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9],
+  "diagnostic_rounds": [5, 15, 25, 35],
+  "legacy_clients": [76, 91, 92, 93, 96, 97, 99, 100, 110, 113, 115, 116, 119, 121, 124],
+  "parameter_structure": {
+    "architecture": "76-64-64-64-9",
+    "body_parameters": 13248,
+    "output_weight_parameters": 576,
+    "output_bias_parameters": 9,
+    "head_parameters_total": 585,
+    "per_quantile_head_parameters": 65,
+    "full_parameters": 13833,
+    "flat_layout": "body[0:13248], output_weight[13248:13824] row-major 9x64, output_bias[13824:13833]"
+  },
+  "candidate_b": {
+    "temporary_name": "QA-V1 candidate",
+    "body_relation": "Stage-5 V1 full-update cosine relation, unchanged",
+    "head_relation": "current-round cosine between 65-dimensional quantile-head updates",
+    "temperature_strategy_if_later_implemented": "one shared tau_head for all quantiles",
+    "ema": false,
+    "aggregation_in_stage6d": false
+  },
+  "random_controls": 100,
+  "random_seed": 62027,
+  "top_k": 10,
+  "diagnostic_gate": {
+    "condition_a": "PASS if mean head-cosine target-level Spearman >= mean full-cosine Spearman - 0.02 and head is not worse than full in at least 5 of 9 quantiles",
+    "condition_b": "PASS if q0.1-vs-q0.9 head-relation Spearman is at least 0.15 below mean adjacent-quantile relation Spearman, or is below 0.60",
+    "condition_c": "PASS if target-block bootstrap 95% CI lower bound for head Top-10 empirical utility minus random Top-10 utility is >0",
+    "condition_d": "PASS if mean adjacent head-relation Top-10 Jaccard minus q0.1-vs-q0.9 Jaccard is >=0.15",
+    "condition_e": "PASS if at least 5 of 15 legacy targets have higher round-mean Top-10 empirical utility under head cosine than full cosine and the legacy macro mean difference is >0",
+    "gate_rule": "At least 3 of 5 conditions must pass before any QA-head aggregation implementation"
+  },
+  "bootstrap_repetitions": 1000,
+  "bootstrap_seed": 162027,
+  "forbidden": [
+    "model training", "personalized aggregation", "test evaluation", "DGU revival",
+    "DGU plus cosine", "attention", "GNN", "Transformer", "Mixture-of-Experts",
+    "learnable relation network", "per-quantile temperature search", "EMA", "crossing correction"
+  ]
+}

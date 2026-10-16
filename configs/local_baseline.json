@@ -1,0 +1,58 @@
+{
+  "stage": 3,
+  "dataset_version": "Main-134/v1",
+  "processed_dir": "data/processed/v1",
+  "stage2_results_dir": "results/stage2",
+  "eda_results_dir": "results/eda",
+  "output_dir": "results/local/h1h/seed_2026",
+  "horizon_minutes": 60,
+  "lookback_steps": 36,
+  "frequency_minutes": 10,
+  "historical_features": ["Patv_clean_kw", "Wspd"],
+  "calendar_features": ["hour_sin", "hour_cos", "day_of_year_sin", "day_of_year_cos"],
+  "flatten_order": "time_major_patv_then_wspd_per_timestamp",
+  "input_dimension": 76,
+  "quantiles": [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9],
+  "hidden_dimensions": [64, 64, 64],
+  "optimizer": "Adam",
+  "learning_rate": 0.001,
+  "batch_size": 2048,
+  "max_epochs": 50,
+  "early_stopping": {
+    "monitor": "validation_mean_pinball",
+    "patience": 6,
+    "min_delta": 0.00001,
+    "restore_best": true
+  },
+  "seed": 2026,
+  "future_seeds_not_run": [2027, 2028],
+  "pilot": {
+    "client_ids": [10, 83, 5, 92, 7, 106],
+    "selection_roles": [
+      "lowest Stage-1 core missing rate",
+      "pre-specified client 83",
+      "closest to median mean clean conditional-power-curve distance; lower client ID breaks exact tie",
+      "largest mean clean conditional-power-curve distance excluding pre-specified client 83",
+      "highest Stage-1 mean wind speed",
+      "lowest Stage-1 mean wind speed"
+    ],
+    "pass_thresholds": {
+      "all_training_losses_decline": true,
+      "all_best_validation_losses_below_initial_validation_loss": true,
+      "finite_predictions_all_clients": true,
+      "median_persistence_mae_improvement_fraction_min": 0.01,
+      "median_persistence_rmse_improvement_fraction_min": 0.01,
+      "clients_improving_both_persistence_mae_and_rmse_min": 5,
+      "mean_pinball_better_than_training_only_climatology": true,
+      "median_q50_pearson_min": 0.5,
+      "single_client_training_time_seconds_max": 600,
+      "metric_tests_must_pass": true,
+      "crossing_rate_must_be_recorded": true
+    }
+  },
+  "cross_client_count": 12,
+  "target_scale_kw": 1500.0,
+  "pinaw_normalizer_pu": 1.0,
+  "audit_random_samples": 100,
+  "torch_num_threads": 4
+}

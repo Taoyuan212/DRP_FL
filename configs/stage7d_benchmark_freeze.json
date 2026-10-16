@@ -1,0 +1,159 @@
+{
+  "stage": "7D",
+  "status": "PROTOCOL_FROZEN",
+  "frozen_at": "2026-08-21",
+  "dataset": {
+    "version": "Main-134/v1",
+    "processed_dir": "data/processed/v1",
+    "client_count": 134,
+    "split": "Stage 2 frozen temporal split",
+    "normalization": "Stage 2 frozen normalization",
+    "lookback_steps": 36,
+    "horizon_minutes": 60
+  },
+  "common_federated_protocol": {
+    "seeds": [2026, 2027, 2028],
+    "participation": "full",
+    "local_epochs": 1,
+    "communication_rounds": 40,
+    "batch_size": 2048,
+    "optimizer": "Adam",
+    "predictor": {
+      "dimensions": [76, 64, 64, 64, 9],
+      "parameter_count": 13833
+    },
+    "quantiles": [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9],
+    "loss": "unweighted mean of nine quantile Pinball losses",
+    "selection_data": "validation only",
+    "test_read": false,
+    "test_read_scope": "Stage 7D newly executed strong-PFL runs; earlier frozen comparator test artifacts remain locked and cannot influence Stage 7D selection"
+  },
+  "local_protocol_exception": {
+    "reason": "Local has no communication rounds and retains the frozen Stage 3 independent-client training and validation early-stopping protocol.",
+    "max_epochs": 50,
+    "optimizer": "Adam",
+    "learning_rate": 0.001,
+    "batch_size": 2048,
+    "validation_monitor": "validation_mean_pinball",
+    "patience": 6,
+    "min_delta": 0.00001
+  },
+  "methods": {
+    "Local": {
+      "role": "baseline",
+      "configuration_source": "configs/local_baseline.json",
+      "execution": "reuse and provenance-audit frozen Stage 3 multi-seed artifacts; do not retrain"
+    },
+    "FedAvg": {
+      "role": "baseline",
+      "learning_rate": 0.001,
+      "aggregation": "sample-count weighted average",
+      "configuration_source": "configs/federated_baselines.json",
+      "execution": "reuse and provenance-audit frozen Stage 4 multi-seed artifacts; do not retrain"
+    },
+    "FedProx": {
+      "role": "baseline",
+      "learning_rate": 0.001,
+      "mu": 0.01,
+      "mu_source": "Stage 4 frozen 12-client validation pilot",
+      "configuration_source": "configs/federated_baselines.json",
+      "execution": "reuse and provenance-audit frozen Stage 4 multi-seed artifacts; do not retrain"
+    },
+    "FedFomo": {
+      "role": "strong_personalized_baseline",
+      "learning_rate": 0.001,
+      "candidate_count": 5,
+      "epsilon": 0.3,
+      "epsilon_decay": 0.05,
+      "inner_fraction": 0.1,
+      "purge_hours": 7,
+      "configuration_source": "configs/stage7b.json"
+    },
+    "pFedGraph": {
+      "role": "strong_personalized_baseline",
+      "learning_rate": 0.001,
+      "graph_lambda": 0.8,
+      "local_cosine_lambda": 0.01,
+      "similarity_scope": "full_update",
+      "configuration_source": "configs/stage7b.json"
+    },
+    "FedAMP": {
+      "role": "strong_personalized_baseline",
+      "variant": "HeurFedAMP",
+      "learning_rate": 0.001,
+      "self_weight": 0.5,
+      "sigma": 1.0,
+      "lambda": 1.0,
+      "alpha": 0.15811388300841897,
+      "effective_proximal_coefficient": 3.1622776601683795,
+      "configuration_source": "configs/stage7b.json"
+    },
+    "PGFed": {
+      "role": "strong_personalized_baseline",
+      "mu": 0.1,
+      "alpha_learning_rate": 0.01,
+      "predictor_learning_rate": 0.005,
+      "momentum": 0.0,
+      "momentum_semantics": "optional alpha-momentum disabled",
+      "client_sgd_momentum": 0.9,
+      "client_sgd_momentum_semantics": "persistent across communication rounds per Stage 7B fidelity freeze",
+      "configuration_source": "configs/stage7b.json"
+    },
+    "DRP-FL_V1": {
+      "role": "proposed_method_comparator",
+      "beta": 0.5,
+      "tau": 0.2,
+      "selected_rounds": {"2026": 39, "2027": 31, "2028": 40},
+      "configuration_source": "results/drp_v1/h1h/stage5_freeze_manifest.json",
+      "execution": "reuse and provenance-audit frozen Stage 5 artifacts; do not retrain or reselect"
+    },
+    "APPLE": {
+      "role": "documented_not_ranked",
+      "fidelity": "IMPLEMENTATION VERIFIED",
+      "status": "ADAPTATION FAILURE UNDER CURRENT PROTOCOL",
+      "benchmark_eligibility": "REJECTED",
+      "official_test": "NOT READ"
+    }
+  },
+  "execution_order": [2026, 2027, 2028],
+  "per_method_seed_artifacts": [
+    "append-only round validation history",
+    "round-boundary checkpoints and method-specific states",
+    "checkpoint and provenance hashes",
+    "runtime",
+    "communication cost",
+    "validation-selected round",
+    "validation macro Pinball, P95, worst-client and crossing",
+    "validation negative-transfer statistics against seed-matched Local"
+  ],
+  "test_gate": {
+    "prerequisites": [
+      "all ranked methods and all three seeds have completed validation",
+      "every selected round is frozen",
+      "every selected checkpoint hash is saved",
+      "test_read=false is recorded for every newly executed Stage 7D strong-PFL run"
+    ],
+    "access_policy": "one official-test evaluation per frozen newly executed strong-PFL model only after the gate passes; earlier comparator test artifacts are reused without reevaluation",
+    "prohibited_after_test": [
+      "round reselection",
+      "retraining",
+      "hyperparameter changes",
+      "method changes prompted by ranking"
+    ]
+  },
+  "prohibitions": [
+    "new grid search",
+    "performance-driven method modification",
+    "model or feature changes",
+    "data split or normalization changes",
+    "training-budget changes",
+    "official-test access before Test Gate"
+  ],
+  "frozen_source_sha256": {
+    "configs/local_baseline.json": "928C316F91CFA73AF28DA9C50E48088DAFA977105ECE84CB7F2E3EA4352A822C",
+    "configs/federated_baselines.json": "BB9E0421BF8F26B7F3AEB4E89C07C7003089862131CADD1809B91D329E46F28F",
+    "configs/stage7b.json": "F9C194B85D284451EAF989F147BEC44F74CA0864EC17D7012C3C722CFF83C3FC",
+    "results/drp_v1/h1h/stage5_freeze_manifest.json": "EBFB1108997109AFD8E74AAFFB7B25456E3C5BAB9AC0D9C868A37173A91FC558",
+    "results/stage7d_entry/Stage_7D_Checkpoint_Readiness_Summary.md": "0A201545D9FFBC9D03F81C5E6FA0FE99F619718414CCD4111F714036F0461814"
+  }
+}

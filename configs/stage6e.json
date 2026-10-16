@@ -1,0 +1,56 @@
+{
+  "stage": "6E",
+  "experiment": "Minimal Quantile-Aware Head Aggregation Falsification Experiment",
+  "seed": 2026,
+  "stage4_config": "configs/federated_baselines.json",
+  "stage5_config": "configs/drp_v1.json",
+  "stage5_root": "results/drp_v1/h1h",
+  "output_root": "results/stage6e",
+  "tau_head_candidates": [0.05, 0.1, 0.2, 0.5, 1.0],
+  "beta_body": 0.5,
+  "tau_body": 0.2,
+  "head_ema": false,
+  "artifact_tolerance": 2e-8,
+  "selection_tolerance": 1e-12,
+  "legacy_clients": [76, 91, 92, 93, 96, 97, 99, 100, 110, 113, 115, 116, 119, 121, 124],
+  "parameter_whitelist": {
+    "body": ["network.0.weight", "network.0.bias", "network.2.weight", "network.2.bias", "network.4.weight", "network.4.bias"],
+    "head_weight": "network.6.weight",
+    "head_bias": "network.6.bias"
+  },
+  "expected_parameter_counts": {
+    "body": 13248,
+    "head_total": 585,
+    "per_quantile_head": 65,
+    "total": 13833
+  },
+  "selection_order": [
+    "macro_validation_pinball",
+    "quantile_macro_nt_rate",
+    "legacy_validation_pinball",
+    "crossing_rate",
+    "tau_head",
+    "round"
+  ],
+  "crossing_safety": {
+    "absolute_percentage_point_increase": 2.0,
+    "relative_increase": 0.10
+  },
+  "gate_thresholds": {
+    "minimum_improved_quantiles": 5,
+    "maximum_largest_quantile_share_of_positive_gain": 0.50,
+    "worst_nt_minimum_reduction": 1e-5,
+    "legacy_minimum_improved_clients": 8,
+    "legacy_macro_minimum_reduction": 1e-5,
+    "maximum_median_self_weight": 0.90
+  },
+  "protocol": {
+    "local_training": false,
+    "closed_loop_personalized_training": false,
+    "body_relation": "Stage 5 V1 full-update cosine, EMA beta=0.5, tau=0.2",
+    "head_relation": "per-quantile 65-dimensional update cosine, no EMA",
+    "empirical_utility_used_for_aggregation": false,
+    "test_access": "only after tau_head and communication round freeze",
+    "additional_seeds_forbidden": [2027, 2028]
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "stage": "6C",
+  "output_dir": "results/stage6c",
+  "seed_list": [2026, 2027, 2028],
+  "client_ids": {"start": 1, "end": 134},
+  "quantiles": [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9],
+  "methods": ["Local", "FedAvg", "FedProx", "DRP-FL V1"],
+  "legacy_persistent_nt_clients": [76, 91, 92, 93, 96, 97, 99, 100, 110, 113, 115, 116, 119, 121, 124],
+  "diagnostic_rounds": [5, 15, 25, 35],
+  "top_k": [5, 10, 20],
+  "stage6b_config": "configs/stage6b.json",
+  "stage6b_output": "results/stage6b",
+  "prediction_paths": {
+    "Local": "results/local/h1h/seed_{seed}/client_{client_id:03d}/test_predictions.parquet",
+    "FedAvg": "results/federated/h1h/seed_{seed}/fedavg/test_predictions_by_client/client_{client_id:03d}.parquet",
+    "FedProx": "results/federated/h1h/seed_{seed}/fedprox/test_predictions_by_client/client_{client_id:03d}.parquet",
+    "DRP-FL V1": "results/drp_v1/h1h/seed_{seed}/test_predictions_by_client/client_{client_id:03d}.parquet"
+  },
+  "primary_nt_method": "DRP-FL V1",
+  "matrix_correlation": "Spearman",
+  "self_pairs_excluded": true,
+  "pair_round_is_descriptive_unit": true,
+  "gate_conditions": {
+    "condition_1_nt_pattern_difference": "PASS if mean adjacent-quantile client-NT Spearman minus q0.1-vs-q0.9 Spearman >=0.15, or q0.1-vs-q0.9 Spearman <0.60",
+    "condition_2_sign_reversal": "PASS if any-quantile sign-reversal rate >=0.30 and q0.1-vs-q0.9 reversal rate >=0.20",
+    "condition_3_top10_overlap": "PASS if mean adjacent Top-10 Jaccard minus q0.1-vs-q0.9 Top-10 Jaccard >=0.15",
+    "condition_4_cosine_explanation_difference": "PASS if max_q rho_q minus min_q rho_q >=0.15",
+    "condition_5_harmful_cohort_heterogeneity": "PASS if legacy cohort exceeds matched beneficial cohort by >=0.10 reversal rate, or has q0.1-vs-q0.9 Jaccard lower by >=0.10, or mean quantile-utility variance >=1.25x; alternatively legacy residual-NT rate max-minus-min across quantiles >=0.20",
+    "condition_6_literature_collision": "PASS only if the 2020-2026 primary-source search finds no mature method that simultaneously implements client-specific, quantile-specific personalized aggregation weights a_ijq"
+  },
+  "gate_decision": {
+    "5_to_6": "QUANTILE-AWARE MECHANISM JUSTIFIED",
+    "3_to_4": "QUANTILE HETEROGENEITY EXISTS BUT METHOD NOT JUSTIFIED",
+    "0_to_2": "QUANTILE-AWARE RELATION NOT JUSTIFIED — FREEZE V1"
+  },
+  "forbidden": [
+    "new model training", "quantile-specific aggregation", "quantile-specific gradient",
+    "attention", "relation network", "quantile-head FL", "crossing correction", "conformal prediction"
+  ]
+}

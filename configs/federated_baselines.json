@@ -1,0 +1,42 @@
+{
+  "stage": 4,
+  "dataset_version": "Main-134/v1",
+  "processed_dir": "data/processed/v1",
+  "stage2_results_dir": "results/stage2",
+  "stage3_results_dir": "results/local/h1h/seed_2026",
+  "eda_results_dir": "results/eda",
+  "output_root": "results/federated/h1h",
+  "horizon_minutes": 60,
+  "lookback_steps": 36,
+  "input_dimension": 76,
+  "hidden_dimensions": [64, 64, 64],
+  "quantiles": [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9],
+  "optimizer": "Adam",
+  "optimizer_state_policy": "reset_each_client_each_round",
+  "learning_rate": 0.001,
+  "batch_size": 2048,
+  "local_epochs": 1,
+  "max_communication_rounds": 40,
+  "round_early_stopping": {
+    "monitor": "sample_weighted_validation_pinball",
+    "patience": 6,
+    "min_delta": 0.00001,
+    "restore_best": true
+  },
+  "participation": "full",
+  "primary_seed": 2026,
+  "additional_seeds": [2027, 2028],
+  "pilot_clients": [10, 83, 5, 92, 7, 106, 96, 130, 118, 122, 2, 125],
+  "fedprox_mu_candidates": [0.001, 0.01, 0.1],
+  "pinaw_normalizer_pu": 1.0,
+  "torch_num_threads": 4,
+  "store_full_updates_seed": 2026,
+  "communication_dtype_bytes": 4,
+  "pilot_pass": {
+    "all_sync_max_abs_error_max": 0.0,
+    "aggregation_manual_max_abs_error_max": 1e-7,
+    "finite_losses_required": true,
+    "best_validation_below_initial_required": true,
+    "negative_cosine_recorded_required": true
+  }
+}

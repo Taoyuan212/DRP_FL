@@ -1,0 +1,65 @@
+{
+  "stage": "7A",
+  "scope": "Strong Personalized Federated Learning Baseline Adaptation Audit",
+  "output_root": "results/stage7a",
+  "dataset": "SDWPF 2021 Main-134/v1",
+  "seed_policy": {
+    "pilot": [2026],
+    "formal_if_pilot_passes": [2026, 2027, 2028]
+  },
+  "pilot_clients": [10, 83, 5, 92, 7, 106, 96, 130, 118, 122, 2, 125],
+  "pilot_rounds": 40,
+  "formal_clients": 134,
+  "formal_rounds": 40,
+  "local_epochs": 1,
+  "model_parameters": 13833,
+  "parameter_dtype_bytes": 4,
+  "fedavg_seed2026_runtime_seconds_40_rounds": 4056.3966292,
+  "task": {
+    "horizon_minutes": 60,
+    "input_dimension": 76,
+    "mlp": [76, 64, 64, 64, 9],
+    "quantiles": [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9],
+    "loss": "mean multi-quantile Pinball",
+    "optimizer_default": "Adam",
+    "train": ["2021-01-01 00:10:00", "2021-09-01 00:00:00"],
+    "official_validation": ["2021-09-01 00:00:00", "2021-11-01 00:00:00"],
+    "official_test": ["2021-11-01 00:00:00", "2022-01-01 00:00:00"]
+  },
+  "fedfomo_inner_split": {
+    "source": "existing train period only",
+    "rule": "last chronological 10% of each client's valid train windows",
+    "role": "per-round source-model utility evaluation only",
+    "excluded_from_local_optimizer_training": true
+  },
+  "formal_strong_baselines": ["FedFomo", "APPLE", "pFedGraph", "PGFed", "FedAMP"],
+  "backup_baselines": ["FedDWA", "pFedLA"],
+  "hyperparameter_policy": {
+    "pilot": "official/literature default only; correctness and feasibility, not winner selection",
+    "formal_seed_2026": "for a scale-mismatched principal coefficient only, default plus 0.5x and 2x; no Cartesian search over multiple coefficients",
+    "additional_seeds": "reuse the seed-2026 frozen method hyperparameters; validation selects round only"
+  },
+  "paper_survival_gate": {
+    "competitive_mean_relative_margin": 0.01,
+    "robustness_oriented_mean_relative_margin": 0.03,
+    "minimum_persistent_nt_relative_reduction": 0.10,
+    "minimum_worst_nt_relative_reduction": 0.10,
+    "efficiency_advantage_required": true,
+    "reject_if_multiple_strong_baselines_dominate_mean_nt_and_worst_client": true
+  },
+  "test_guard": {
+    "training_and_tuning_processes_may_open_test_files": false,
+    "freeze_hyperparameters_and_round_before_test": true,
+    "one_test_evaluation_per_method_seed": true,
+    "test_reselection_forbidden": true
+  },
+  "forbidden": [
+    "134-client baseline training in Stage 7A",
+    "test-based tuning",
+    "removing closed-loop personalization",
+    "new relation proxy",
+    "DGU revival",
+    "QA-head revival",
+    "crossing correction not present in the original baseline"
+  ]
+}

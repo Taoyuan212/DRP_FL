@@ -1,0 +1,43 @@
+{
+  "stage": "7C",
+  "scope": "Strong Baseline Single-Parameter Validation Calibration",
+  "seed": 2026,
+  "client_ids": "all_134",
+  "processed_dir": "data/processed/v1",
+  "initial_checkpoint": "results/local/h1h/seed_2026/initial_model_seed_2026.pt",
+  "output_root": "results/stage7c",
+  "allowed_splits": ["train", "validation"],
+  "test_read": false,
+  "lookback_steps": 36,
+  "horizon_minutes": 60,
+  "input_dimension": 76,
+  "hidden_dimensions": [64, 64, 64],
+  "quantiles": [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9],
+  "predictor_parameters": 13833,
+  "batch_size": 2048,
+  "learning_rate": 0.001,
+  "local_epochs": 1,
+  "rounds": 40,
+  "torch_num_threads": 4,
+  "selection": {
+    "primary": "macro_validation_pinball",
+    "tie_breakers": ["client_validation_pinball_p95", "worst_client_validation_pinball", "validation_crossing_rate"],
+    "material_macro_pinball_threshold": 0.0001,
+    "retain_default_when_no_material_benefit": true
+  },
+  "apple": {
+    "core_learning_rate_candidates": [0.005, 0.01, 0.02],
+    "default_core_learning_rate": 0.01,
+    "relationship_learning_rate": 0.001,
+    "mu": 0.1,
+    "schedule": "exponential",
+    "dynamic_fraction": 0.1
+  },
+  "fedamp": {
+    "proximal_coefficient_default": 3.1622776601683795,
+    "proximal_coefficient_multipliers": [0.5, 1.0, 2.0],
+    "self_weight": 0.5,
+    "sigma": 1.0,
+    "variant": "HeurFedAMP"
+  }
+}

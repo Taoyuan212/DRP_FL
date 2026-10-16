@@ -1,0 +1,29 @@
+{
+  "stage": "7B",
+  "scope": "Strong PFL 12-client pilot and fidelity audit",
+  "seed": 2026,
+  "client_ids": [10, 83, 5, 92, 7, 106, 96, 130, 118, 122, 2, 125],
+  "processed_dir": "data/processed/v1",
+  "initial_checkpoint": "results/local/h1h/seed_2026/initial_model_seed_2026.pt",
+  "output_root": "results/stage7b",
+  "allowed_splits": ["train", "validation"],
+  "test_read": false,
+  "lookback_steps": 36,
+  "horizon_minutes": 60,
+  "input_dimension": 76,
+  "hidden_dimensions": [64, 64, 64],
+  "quantiles": [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9],
+  "predictor_parameters": 13833,
+  "batch_size": 2048,
+  "learning_rate": 0.001,
+  "local_epochs": 1,
+  "rounds": 40,
+  "torch_num_threads": 4,
+  "methods": {
+    "fedfomo": {"candidate_count": 5, "epsilon": 0.3, "epsilon_decay": 0.05, "inner_fraction": 0.1},
+    "apple": {"lr_core": 0.01, "lr_relation": 0.001, "mu": 0.1, "schedule": "exponential", "dynamic_fraction": 0.1},
+    "pfedgraph": {"graph_lambda": 0.8, "local_cosine_lambda": 0.01, "similarity_scope": "full_update"},
+    "fedamp": {"variant": "HeurFedAMP", "self_weight": 0.5, "sigma": 1.0, "lambda": 1.0, "alpha": 0.15811388300841897},
+    "pgfed": {"mu": 0.1, "alpha_learning_rate": 0.01, "predictor_learning_rate": 0.005, "momentum": 0.0}
+  }
+}
